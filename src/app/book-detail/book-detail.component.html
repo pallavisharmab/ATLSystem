@@ -1,0 +1,83 @@
+<div class="card">
+    <div class="card-header">
+        {{pageTitle}}
+      </div>
+
+      <div class="card-body"
+       *ngIf="book">
+       <div class="row">
+          <div class="col-md-8">
+              <div class="row">
+                <div class="col-md-3">Title:</div>
+                <div class="col-md-6">{{book.bookTitle}}</div>
+              </div>
+              &nbsp;
+              &nbsp;
+              <div class="row">
+                <div class="col-md-3">ISBN:</div>
+                <div class="col-md-6">{{book.isbn}}</div>
+              </div>
+              &nbsp;
+              &nbsp;
+              <div class="row">
+                <div class="col-md-3">Author:</div>
+                <div class="col-md-6">{{book.author}}</div>
+              </div>
+              &nbsp;
+              &nbsp;
+              <div class="row">
+                <div class="col-md-3">Genre:</div>
+                <div class="col-md-6">{{book.genre}}</div>
+              </div>
+              &nbsp;
+              &nbsp;
+              <div class="row">
+                  <div class="col-md-3">Description::</div>
+                  <div class="col-md-6">{{book.description}}</div>
+                </div>
+                &nbsp;
+                &nbsp;
+              <div class="row">
+                <div class="col-md-3">Price:</div>
+                <div class="col-md-6">{{book.cost|currency:"USD":"symbol"}}</div>
+              </div>
+              &nbsp;
+              &nbsp;
+              <div class="row">
+                <div class="col-md-3">Availability:</div>
+                <div class="col-md-6">{{book.issued}}</div>
+              </div>
+              <div class="row">
+                  <div class="col-md-3" *ngIf="isAdmin">
+                    <a [routerLink] ="['/books', book.id, 'edit']" class="btn btn-primary mr-3" style="width:80px">
+                    Edit
+                   </a>
+                  </div>
+             
+              </div>
+              
+             
+              &nbsp;
+              &nbsp;
+              <!-- <div class="row">
+                <div class="col-md-3">5 Star Rating:</div>
+                <div class="col-md-6">
+                  <pm-star [rating]="book.starRating">
+                  </pm-star>
+                </div>
+              </div> -->
+            </div>
+      
+            <div class="col-md-4"
+                 *ngIf="book.imgUrl">
+              <img class="center-block img-fluid "
+                   [style.height.px]="350"
+                   [style.margin.px]="2"
+                   [src]="book.imgUrl"
+                   [title]="book.productName">
+            </div>
+         </div>
+
+
+       </div>
+  </div>

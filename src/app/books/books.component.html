@@ -1,0 +1,69 @@
+
+<span class="fa fa-spinner spinner"
+*ngIf="loading"></span>
+<h2>View Books</h2>
+&nbsp;
+&nbsp;
+<div class="container">
+    <div class="md-form active-pink active-pink-2 mb-3 mt-0">
+        <input type="text" [(ngModel)] = "searchText" placeholder="Search Title" aria-label="Search Title" class="form-control">
+      </div>
+
+  <label>Sort by:</label>
+                <select class="browser-default custom-select" [(ngModel)]="sortByKey">
+                    <option value="" disabled selected>Sort by</option>
+                    <option value="id">Book Id</option>
+                    <option value="bookTitle">Title</option>
+                    <option value="genre">Genre</option>
+                    <option value="author">Author</option>
+                    <option value="cost">Cost</option>
+                  </select>
+    
+</div>
+
+&nbsp;
+&nbsp;
+&nbsp;
+ <div class="container">   
+       <table class="table table-striped table-hover table-bordered border border-dark ">
+       <tr class="thead-dark" >
+         <th >#</th>
+         <th>BookDetails</th>
+         <th>Availability</th>
+        </tr>
+      
+
+  <tr *ngFor="let book of books | searchpipe: searchText | sortBy: sortByKey" >
+    <td><img src="{{book.imgUrl}}" class="img-thumbnail img-fluid"  /></td>
+    <td>
+      <!-- style="width:70%;max-width:200px;height:250px;" -->
+      <div> 
+        <ul> 
+          <li><label>Book ID:</label>&nbsp;{{book.id}}</li>
+          <li><label>Title:</label>&nbsp;{{book.bookTitle}}</li>
+          <li><label>Genre:</label>&nbsp;{{book.genre}}</li>
+          <li><label>Author:</label>&nbsp;{{book.author}}</li>
+          <li><label>Cost:</label>&nbsp;{{book.cost}}</li>
+        </ul>
+      </div>
+    </td>
+    <td>
+       
+      <label *ngIf="!book.issued"  class="available" style="align-content: center"> Available</label>
+        <label *ngIf="book.issued" class="not-available">Not Available</label>
+        <br>
+        <br>
+      <a [routerLink] ="['/books', book.id]" style="width: 160px" class="btn btn-primary btn-sm">
+        View Details
+      </a>
+     
+      <br>
+      <br>
+      <a *ngIf="!book.issued"  class="btn btn-primary btn-sm"  style="width: 160px" (click)="IssueBook()">
+          Issue To Self
+    </a>
+    <br>
+      </td>
+  </tr> 
+</table>
+</div>
