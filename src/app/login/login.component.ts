@@ -19,16 +19,18 @@ export class LoginComponent {
        const userName = loginForm.form.value.userName;
        const password = loginForm.form.value.password;
      this.authService.login(userName, password);
-      
-      if (this.authService.redirectUrl) {
-        this.router.navigate(['/home']);
-        //this.router.navigateByUrl(this.authService.redirectUrl);
-     } else {
-         this.router.navigate(['/login']);
-       }
-    } else {
-      this.errorMessage = 'Please enter a user name and password.';
-    }
+     
+     if(this.authService.redirectUrl) {
+            this.router.navigateByUrl(this.authService.redirectUrl);
+         } else {
+             this.router.navigate(['/login']);
+         }
+        } 
+         else {
+          this.errorMessage = 'Please enter a user name and password.';
+         }
   }
-}
- 
+  
+} 
+
+

@@ -1,9 +1,13 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 import { Book } from '../models/books';
+import {User} from '../models/user'
 import { Injectable } from '@angular/core';
+import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
 
 export class BookData implements InMemoryDbService {
     createDb() {
+
+        
 const books: Book[] = [
     {
         'id': 101,
@@ -138,6 +142,29 @@ const books: Book[] = [
         'description' :'Building upon your existing JavaScript skills you ll be shown how to use Node.js to build both Web- and Network-based applications, to deal with data sources, capture events and deal with child processes to create robust applications that will work well in a wide range of circumstances.'
     }
 ];
+
+
+const users: User[] = [
+    {
+        'id': 1,
+        'userName': 'Admin',
+        'password': 'admin',
+        'isAdmin': true
+    },
+    {
+        'id': 2,
+        'userName': 'pallavi',
+        'password': 'pallavi',
+        'isAdmin': false
+    },
+
+]
+ 
+
+var bookss= JSON.stringify(books);
+  localStorage.setItem("books",bookss);
+  var userss= JSON.stringify(users);
+  localStorage.setItem("users",userss);
   return { books };
  }
 }

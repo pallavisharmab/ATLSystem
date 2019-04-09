@@ -17,26 +17,30 @@ import { BooksComponent } from '../books/books.component';
  
 @Injectable({providedIn: 'root'})
 export class BooksService { 
-  private books  = [];
-  private productsObservable : Observable<any[]> ; 
-  baseUrl:string = "http://localhost:3000";
+  
    private bookUrl = 'api/books';
   // private bookUrl ='../assets/books.json';
  
  constructor(private http: HttpClient) { }
  
   getAllBooks(): Observable<Book[]>{
-    this.http.get(this.baseUrl + '/books')
-       .subscribe((res: any[])=>{
-        console.log(res);
-         this.books=res;
-       });
-     
-       return this.http.get<Book[]>(this.bookUrl)//(this.baseUrl + '/Books')
+    
+    if(localStorage.getItem('books') === null){
+      return this.http.get<Book[]>(this.bookUrl)//(this.baseUrl + '/Books')
       .pipe(
         tap(data => console.log(JSON.stringify(data))),
         catchError(this.handleError)
       );
+    }else{
+      var books=JSON.parse(localStorage.getItem('books'));
+      console.log(books);
+      return this.http.get<Book[]>(books).pipe(
+        tap(data => console.log(JSON.stringify(data))),
+        catchError(this.handleError)
+      );
+      
+    }
+      
       
      
        

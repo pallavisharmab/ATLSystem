@@ -21,25 +21,35 @@ export class AuthService {
       this.messageService.addMessage('Please enter your userName and password');
       return;
     }
-    if (userName === 'admin') {
-      this.currentUser = {
-        id: 1,
-        userName: userName,
-        password:password,
-        isAdmin: true,
-        issuedbooks:null
-      };
-      this.messageService.addMessage('Admin login');
-      return;
+    var logins = JSON.parse(localStorage.getItem("users"));
+    for (var key in logins) {
+     if (userName==logins[key].userName){
+       this.currentUser=logins[key];
+       return;
+     }
     }
-    this.currentUser = {
-      id: 2,
-      userName: userName,
-      password:password,
-      isAdmin: false,
-      issuedbooks:null
-    };
-    this.messageService.addMessage(`User: ${this.currentUser.userName} logged in`);
+    
+    if ( this.currentUser!=null){
+      this.messageService.addMessage(`User: ${this.currentUser.userName} logged in`);
+    }
+    
+    // if (userName === 'admin') {
+    //   this.currentUser = {
+    //     id: 1,
+    //     userName: userName,
+    //     password:password,
+    //     isAdmin: true
+    //   };
+    //   this.messageService.addMessage('Admin login');
+    //   return;
+    // }
+    // this.currentUser = {
+    //   id: 2,
+    //   userName: userName,
+    //   password:password,
+    //   isAdmin: false
+    // };
+    // this.messageService.addMessage(`User: ${this.currentUser.userName} logged in`);
   }
 
   logout(): void {
