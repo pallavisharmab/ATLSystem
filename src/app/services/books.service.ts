@@ -1,10 +1,8 @@
 
 import { Injectable } from '@angular/core';
-// import { Http } from '@angular/http';
-
-//import { BookData } from '../data/books-mock';
 import { Book } from '../models/books';
 import { User } from '../models/user';
+
 
 
 
@@ -19,6 +17,7 @@ import { BooksComponent } from '../books/books.component';
 export class BooksService { 
   
    private bookUrl = 'api/books';
+  localbooks: Book[];
   // private bookUrl ='../assets/books.json';
  
  constructor(private http: HttpClient) { }
@@ -33,19 +32,12 @@ export class BooksService {
       );
     }else{
       var books=JSON.parse(localStorage.getItem('books'));
-      console.log(books);
-      return this.http.get<Book[]>(books).pipe(
-        tap(data => console.log(JSON.stringify(data))),
-        catchError(this.handleError)
-      );
-      
+     this.localbooks=books;
+     return of(this.localbooks);
     }
-      
+      }
       
      
-       
-      }
-    
   getBook(id: number): Observable<Book> {
           if (id === 0) {
             return of(this.initializeProduct());

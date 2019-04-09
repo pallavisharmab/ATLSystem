@@ -20,7 +20,8 @@ export class BookListResolver implements Resolve<BookListResolved>{
 
             return this.booksService.getAllBooks()
             .pipe(
-              map(books => ({ books: books })),
+              map(books => ({ books: books }))
+              ,
               catchError(error => {
                 const message = `Retrieval error: ${error}`;
                 console.error(message);
