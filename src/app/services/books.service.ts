@@ -123,7 +123,7 @@ export class BooksService {
     const url = `${this.bookUrl}/${book.id}`;
     if(localStorage.getItem('books') != null){
      // book.id=parseInt(localStorage.getItem('maxBookId'))+1;
-      book.imgUrl='/assets/noImage.JPG';
+      //book.imgUrl='/assets/noImage.JPG';
       var books=JSON.parse(localStorage.getItem('books'));
 
       for (var key in books) {
@@ -149,12 +149,29 @@ export class BooksService {
   deleteBook(id: number): Observable<{}> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const url = `${this.bookUrl}/${id}`;
+    if(localStorage.getItem('books') != null){
+       var books=JSON.parse(localStorage.getItem('books'));
+       this.localbooks=books;
+      
+       for (var key in books) {
+         if (id==books[key].id){
+          this.localbooks.splice(parseInt(key),1);
+         
+          localStorage.setItem('books',JSON.stringify(this.localbooks));
+          //localStorage.setItem('maxBookId',(books[key].id)-1));
+           return of(this.initializeProduct());
+         }
+     }
+   }
+     else
+     {
     return this.http.delete<Book>(url, { headers: headers })
       .pipe(
         tap(data => console.log('deleteBook: ' + id)),
         catchError(this.handleError)
       );
   }
+}
 
   issueBook(Id:number,userId:number){
     // const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
