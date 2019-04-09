@@ -28,8 +28,6 @@ export class BookListResolver implements Resolve<BookListResolved>{
                 return of({ books: null, error: message });
               })
             );
-    // return this.booksService.getAllBooks().pipe(
-    //     map(book => ({ book: book }))
   }
 }
 

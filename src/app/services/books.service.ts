@@ -18,12 +18,14 @@ export class BooksService {
   
    private bookUrl = 'api/books';
   localbooks: Book[];
+  localbook: Book;
   // private bookUrl ='../assets/books.json';
  
  constructor(private http: HttpClient) { }
  
   getAllBooks(): Observable<Book[]>{
-    
+    //localStorage.clear();
+   
     if(localStorage.getItem('books') === null){
       return this.http.get<Book[]>(this.bookUrl)//(this.baseUrl + '/Books')
       .pipe(
@@ -32,24 +34,32 @@ export class BooksService {
       );
     }else{
       var books=JSON.parse(localStorage.getItem('books'));
-     this.localbooks=books;
-     return of(this.localbooks);
+         this.localbooks=books;
+         return of(this.localbooks);
     }
       }
-      
-     
+         
   getBook(id: number): Observable<Book> {
           if (id === 0) {
             return of(this.initializeProduct());
           }
-    
-          const url = `${this.bookUrl}/${id}`;
-          return this.http.get<Book>(url)
-            .pipe(
-              tap(data => console.log(`fetched book id=${id}`)),
-              catchError(this.handleError)
-           
-      );
+          if(localStorage.getItem('books') === null){
+               const url = `${this.bookUrl}/${id}`;
+                  return this.http.get<Book>(url)
+                  .pipe(
+                  tap(data => console.log(`fetched book id=${id}`)),
+                  catchError(this.handleError)
+                 );
+            }else{
+              var books=JSON.parse(localStorage.getItem('books'));
+              for (var key in books) {
+                if (id==books[key].id){
+                  console.log(books[key]);
+                 this.localbook=books[key];
+                 return of(this.localbook);
+                }
+               }
+            }
   }
 
   private initializeProduct(): Book {
@@ -86,11 +96,23 @@ export class BooksService {
   createBook(book: Book): Observable<Book> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     book.id = null;
-    return this.http.post<Book>(this.bookUrl, book, { headers: headers })
-      .pipe(
-        tap(data => console.log('createBook: ' + JSON.stringify(data))),
-        catchError(this.handleError)
-      );
+    
+    if(localStorage.getItem('books') != null){
+      book.id=parseInt(localStorage.getItem('maxBookId'))+1;
+      book.imgUrl='/assets/noImage.JPG';
+      var books=JSON.parse(localStorage.getItem('books'));
+      books[books.length]=book;
+      localStorage.setItem('books',JSON.stringify(books));
+      localStorage.setItem('maxBookId',book.id.toString());
+     return of(book);
+    }
+   
+
+    // return this.http.post<Book>(this.bookUrl, book, { headers: headers })
+    //   .pipe(
+    //     tap(data => console.log('createBook: ' + JSON.stringify(data))),
+    //     catchError(this.handleError)
+    //   );
   }
 
   updateBook(book: Book): Observable<Book> {

@@ -165,6 +165,8 @@ var bookss= JSON.stringify(books);
   localStorage.setItem("books",bookss);
   var userss= JSON.stringify(users);
   localStorage.setItem("users",userss);
+  localStorage.setItem("maxBookId","112");
+  localStorage.setItem("maxUserId","2");
   return { books };
  }
 }
