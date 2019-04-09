@@ -106,18 +106,36 @@ export class BooksService {
       localStorage.setItem('maxBookId',book.id.toString());
      return of(book);
     }
+    else{
+      return this.http.post<Book>(this.bookUrl, book, { headers: headers })
+      .pipe(
+        tap(data => console.log('createBook: ' + JSON.stringify(data))),
+        catchError(this.handleError)
+      );
+    }
    
 
-    // return this.http.post<Book>(this.bookUrl, book, { headers: headers })
-    //   .pipe(
-    //     tap(data => console.log('createBook: ' + JSON.stringify(data))),
-    //     catchError(this.handleError)
-    //   );
+   
   }
 
   updateBook(book: Book): Observable<Book> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const url = `${this.bookUrl}/${book.id}`;
+    if(localStorage.getItem('books') != null){
+     // book.id=parseInt(localStorage.getItem('maxBookId'))+1;
+      book.imgUrl='/assets/noImage.JPG';
+      var books=JSON.parse(localStorage.getItem('books'));
+
+      for (var key in books) {
+        if (book.id==books[key].id){
+          books[key]=book;
+          localStorage.setItem('books',JSON.stringify(books));
+          return of(book);
+        }
+    }
+  }
+    else
+    {
     return this.http.put<Book>(url, book, { headers: headers })
       .pipe(
         tap(() => console.log('updateBook: ' + book.id)),
@@ -125,6 +143,7 @@ export class BooksService {
         map(() => book),
         catchError(this.handleError)
       );
+    }
   }
 
   deleteBook(id: number): Observable<{}> {
