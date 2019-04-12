@@ -5,6 +5,12 @@ export interface User {
   id: number;
   userName: string;
   password: string;
-  isAdmin: boolean
+  isAdmin: boolean;
+  booksIssued: IssueDetails[];
  
+}
+export interface IssueDetails{
+  bookId:number;
+  IssuedDate:Date;
+  RenewedDate:Date;
 }

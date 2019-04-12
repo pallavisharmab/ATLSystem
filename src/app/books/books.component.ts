@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Book, BookListResolved } from '../models/books';
-import  { BookData } from '../data/books-mock';
+
 import { BooksService } from '../services/books.service';
 
 
@@ -17,7 +17,7 @@ export class BooksComponent implements OnInit {
   books: Book[];
  //books=[];
 
-
+ 
   constructor(private bookService: BooksService,private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -25,6 +25,7 @@ export class BooksComponent implements OnInit {
     this.getBooks(); 
     
   }
+  
 
   getBooks():void{
    
@@ -33,6 +34,7 @@ export class BooksComponent implements OnInit {
       this.errorMessage = resolvedListData.error;
       this.books=resolvedListData.books;
      }
+ 
   } 
   
 

@@ -47,14 +47,7 @@
                 <div class="col-md-3">Availability:</div>
                 <div class="col-md-6">{{book.issued}}</div>
               </div>
-              <div class="row">
-                  <div class="col-md-3" *ngIf="isAdmin">
-                    <a [routerLink] ="['/books', book.id, 'edit']" class="btn btn-primary mr-3" style="width:80px">
-                    Edit
-                   </a>
-                  </div>
-             
-              </div>
+              
               
              
               &nbsp;
@@ -67,6 +60,7 @@
                 </div>
               </div> -->
             </div>
+           
       
             <div class="col-md-4"
                  *ngIf="book.imgUrl">
@@ -78,6 +72,36 @@
             </div>
          </div>
 
+        
+          <div class="col-md-3" *ngIf="isAdmin">
+            <a [routerLink] ="['/books', book.id, 'edit']" class="btn btn-primary mr-3" style="width:80px">
+            Edit
+           </a>
+          </div>
+           &nbsp;
+           &nbsp;
 
-       </div>
-  </div>
+          <div class="col-md-3" *ngIf="!isAdmin && !book.issued"  class="btn btn-primary btn-sm">
+            <a style="width: 160px" (click)="IssueBook()">
+              Issue To Self
+          </a>
+        </div>
+          &nbsp;
+          &nbsp;
+        <div *ngIf="IsissuedToCurrentUser && !isAdmin" class="btn btn-primary btn-sm">
+          <a style="width: 160px" (click)="ReturnBook()">
+           Return
+        </a>
+      </div>
+        &nbsp;
+        &nbsp;
+        <div *ngIf="IsissuedToCurrentUser && !isAdmin" class="btn btn-primary btn-sm">
+        <a style="width: 160px" (click)="RenewBook()">
+         Renew
+      </a>
+    </div>
+    &nbsp;
+      &nbsp;
+  </div> 
+     
+    </div>

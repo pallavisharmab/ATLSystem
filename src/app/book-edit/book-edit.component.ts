@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { Book,BookResolved } from '../models/books';
 import { BooksService } from '../services/books.service';
-import { MessageService } from '../services/message.service';
+
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -32,8 +32,7 @@ export class BookEditComponent implements OnInit {
   constructor(private bookService: BooksService,
               private route: ActivatedRoute,
               private router: Router,
-              private messageService: MessageService,
-              private authservice: AuthService) { }
+         private authservice: AuthService) { }
 
   ngOnInit() {
     if(this.authservice.currentUser.isAdmin)
@@ -101,7 +100,7 @@ export class BookEditComponent implements OnInit {
 
   onSaveComplete(message?: string): void {
     if (message) {
-      this.messageService.addMessage(message);
+     //add message
     }
     this.reset();
 

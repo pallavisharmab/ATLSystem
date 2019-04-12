@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { User } from '../models/user';
- import { MessageService } from './message.service';
-
+ 
 @Injectable({
   providedIn: 'root'
 })
@@ -14,42 +13,44 @@ export class AuthService {
     return !!this.currentUser;
   }
 
-  constructor(private messageService: MessageService) { }
+  constructor() { }
 
   login(userName: string, password: string): void {
     if (!userName || !password) {
-      this.messageService.addMessage('Please enter your userName and password');
+      //add message
       return;
     }
-    var logins = JSON.parse(localStorage.getItem("users"));
-    for (var key in logins) {
-     if (userName==logins[key].userName){
-       this.currentUser=logins[key];
-       return;
-     }
-    }
-    
-    if ( this.currentUser!=null){
-      this.messageService.addMessage(`User: ${this.currentUser.userName} logged in`);
-    }
-    
-    // if (userName === 'admin') {
-    //   this.currentUser = {
-    //     id: 1,
-    //     userName: userName,
-    //     password:password,
-    //     isAdmin: true
-    //   };
-    //   this.messageService.addMessage('Admin login');
-    //   return;
+    // var logins = JSON.parse(localStorage.getItem("users"));
+    // for (var key in logins) {
+    //  if (userName==logins[key].userName){
+    //    this.currentUser=logins[key];
+    //    return;
+    //  }
     // }
-    // this.currentUser = {
-    //   id: 2,
-    //   userName: userName,
-    //   password:password,
-    //   isAdmin: false
-    // };
-    // this.messageService.addMessage(`User: ${this.currentUser.userName} logged in`);
+    
+    // if ( this.currentUser!=null){
+    //   this.messageService.addMessage(`User: ${this.currentUser.userName} logged in`);
+    // }
+    
+    if (userName === 'admin') {
+      this.currentUser = {
+        id: 1,
+        userName: userName,
+        password:password,
+        isAdmin: true,
+        booksIssued:null
+      };
+      
+      return;
+    }
+    this.currentUser = {
+      id: 2,
+      userName: userName,
+      password:password,
+      isAdmin: false,
+      booksIssued: [ {'bookId':101,'IssuedDate':'2019/03/30 10:14:23','RenewedDate':null }]
+    };
+    
   }
 
   logout(): void {
