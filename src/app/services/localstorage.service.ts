@@ -148,6 +148,21 @@ export class LocalStorageService {
         }
         
     }
+
+    RenewBook(user:User,book:Book):void{
+        if(!this._HasData)
+          {
+             this.LoadLocalStorage();
+          }
+       else
+          {
+              var users=JSON.parse(localStorage.getItem('users'));
+                //update user
+                this.updateUser(user,book.id,users,"renew");             
+               
+          }
+          
+      }
     private checkIfExisting(users:any,id:number):boolean{
         for (var key in users) {
             if (id==users[key].id){
@@ -179,7 +194,7 @@ export class LocalStorageService {
         {
           this.issueData={
             bookId:bookId,
-            IssuedDate:Date.now.toString(),
+            IssuedDate:new Date().toLocaleDateString(),
             RenewedDate:null
           };
            
@@ -189,6 +204,11 @@ export class LocalStorageService {
         {
             var index=user.booksIssued.findIndex(x=>x.bookId==bookId);
             user.booksIssued.splice(index,1);
+        }
+        else if (action==="renew")
+        {
+            var index=user.booksIssued.findIndex(x=>x.bookId==bookId);
+            user.booksIssued[index].RenewedDate=new Date().toLocaleDateString();
         }
        
         for (var key in users) {

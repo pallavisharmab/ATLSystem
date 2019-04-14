@@ -12,7 +12,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
-//import { MessagesComponent } from './messages/messages.component';
+import { AlertComponent } from './alert/alert.component';
+import { AlertService } from './services/alert.service';
 
 
 
@@ -27,15 +28,19 @@ import { LoginComponent } from './login/login.component';
   //  BookData, { dataEncapsulation: false, delay: 1000 }),
    BrowserAnimationsModule
   
-    
-
+   
   ],
   declarations: [
+    AlertComponent,
     AppComponent,
     HomeComponent ,
     LoginComponent
   ],
-  
+  providers: [
+    // include alert service in app module providers
+    AlertService
+],
+  exports : [AlertComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { } 

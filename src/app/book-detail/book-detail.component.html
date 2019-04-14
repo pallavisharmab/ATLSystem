@@ -81,21 +81,21 @@
            &nbsp;
            &nbsp;
 
-          <div class="col-md-3" *ngIf="!isAdmin && !book.issued"  class="btn btn-primary btn-sm">
+          <div class="col-md-3" *ngIf="!isAdmin && !book.issued"  class="btn btn-primary btn-lg">
             <a style="width: 160px" (click)="IssueBook()">
               Issue To Self
           </a>
         </div>
           &nbsp;
           &nbsp;
-        <div *ngIf="IsissuedToCurrentUser && !isAdmin" class="btn btn-primary btn-sm">
+        <div *ngIf="IsissuedToCurrentUser && !isAdmin" class="btn btn-primary btn-lg">
           <a style="width: 160px" (click)="ReturnBook()">
            Return
         </a>
       </div>
         &nbsp;
         &nbsp;
-        <div *ngIf="IsissuedToCurrentUser && !isAdmin" class="btn btn-primary btn-sm">
+        <div *ngIf="IsissuedToCurrentUser && !isAdmin" class="btn btn-primary btn-lg">
         <a style="width: 160px" (click)="RenewBook()">
          Renew
       </a>

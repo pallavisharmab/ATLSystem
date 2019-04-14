@@ -15,7 +15,7 @@ export const USERS: User[]=
         'password': 'pallavi',
         'isAdmin': false,
         'booksIssued':[
-        {'bookId':101,'IssuedDate':"2014-01-01T23:28:56.782Z",'RenewedDate':null }]
+        {'bookId':101,'IssuedDate':'3/12/2019','RenewedDate':null }]
     },
 
     

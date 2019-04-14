@@ -5,6 +5,7 @@ import { Book, BookResolved } from '../models/books';
 import { AuthService } from '../services/auth.service';
 import { AuthGuard } from '../login/auth.guard';
 import { BooksService } from '../services/books.service';
+import { AlertService } from '../services/alert.service';
 
 
 @Component({
@@ -31,10 +32,19 @@ export class BookdetailComponent implements OnInit {
   } 
     
   }
+  get canIssueBooks():boolean{
+    if(!this.isAdmin){
+    if (this.authService.currentUser.booksIssued.length<2)
+    {
+      return true;
+    }
+  } 
+    
+  }
   constructor(
     private bookService: BooksService,
     private route: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,private alertService: AlertService
     ) { }
 
     ngOnInit(): void {
@@ -60,12 +70,24 @@ export class BookdetailComponent implements OnInit {
     }
 
     IssueBook():void{
-      this.bookService.issueBook(this.authService.currentUser,this.book);
+      if (!this.canIssueBooks) {
+        this.alertService.error("You have already rented 2 books!!");
+      }
+      else{
+        this.alertService.success(this.book.bookTitle+ " Issued successfully!!");
+        this.bookService.issueBook(this.authService.currentUser,this.book);
+      }
+     
     }
     ReturnBook():void{
+      this.alertService.success(this.book.bookTitle+ " returned successfully!!");
       this.bookService.returnBook(this.authService.currentUser,this.book);
     }
+    RenewBook():void{
+      this.alertService.success(this.book.bookTitle+ " renewed successfully!!");
+      this.bookService.renewBook(this.authService.currentUser,this.book);
 
+    }
     onSaveComplete(message?: string): void {
       if (message) {
         //add a message

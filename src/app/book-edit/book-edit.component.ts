@@ -44,6 +44,7 @@ export class BookEditComponent implements OnInit {
     });
   }
   else{
+    
   this.router.navigateByUrl('/home');
 }
   

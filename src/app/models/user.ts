@@ -11,6 +11,6 @@ export interface User {
 }
 export interface IssueDetails{
   bookId:number;
-  IssuedDate:Date;
-  RenewedDate:Date;
+  IssuedDate:string;
+  RenewedDate:string;
 }
