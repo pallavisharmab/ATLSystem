@@ -16,7 +16,6 @@ import { AlertComponent } from './alert/alert.component';
 import { AlertService } from './services/alert.service';
 
 
-
 @NgModule({
 
   imports: [
@@ -31,7 +30,7 @@ import { AlertService } from './services/alert.service';
    
   ],
   declarations: [
-    AlertComponent,
+    AlertComponent, 
     AppComponent,
     HomeComponent ,
     LoginComponent
@@ -39,6 +38,7 @@ import { AlertService } from './services/alert.service';
   providers: [
     // include alert service in app module providers
     AlertService
+  
 ],
   exports : [AlertComponent],
   bootstrap: [AppComponent]

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { AuthService } from '../services/auth.service';
 
+
 @Component({
   templateUrl: './login.component.html'
 })
@@ -12,8 +13,10 @@ export class LoginComponent {
   pageTitle = 'Log In';
 
   constructor(private authService: AuthService,
-              private router: Router) { }
+              private router: Router,
+              ) { }
 
+ 
   login(loginForm: NgForm) {
     if (loginForm && loginForm.valid) {
        const userName = loginForm.form.value.userName;
