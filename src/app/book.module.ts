@@ -8,7 +8,7 @@ import { BookEditComponent } from './book-edit/book-edit.component';
 
 import { BookResolver } from './services/book-resolver.service';
 import { BookListResolver} from './bookList-resolver.service';
-
+import { SharedModule } from './shared/shared.module';
 import { SearchPipe } from '../app/pipes/search-filter';
 import { SortByPipe } from '../app/pipes/sort-by';
 
@@ -17,6 +17,7 @@ import { SortByPipe } from '../app/pipes/sort-by';
   imports: [
     FormsModule,
     CommonModule,
+    SharedModule,
     RouterModule.forChild([
         {
             path: '',

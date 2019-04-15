@@ -44,7 +44,8 @@ export class BooksService {
       imgUrl : null,
       issued : null,
       isbn : null,
-      description :null
+      description :null,
+      starRating: 0
     };
   }
 
@@ -86,8 +87,8 @@ export class BooksService {
    this.localstorageservice.ReturnBook(user,book) ;
    
   }
-  renewBook(user:User,book:Book):void{
-    this.localstorageservice.RenewBook(user,book) ;
+  renewBook(user:User,book:Book):boolean{
+   return this.localstorageservice.RenewBook(user,book) ;
     
    }
 

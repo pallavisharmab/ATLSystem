@@ -52,16 +52,17 @@
              
               &nbsp;
               &nbsp;
-              <!-- <div class="row">
-                <div class="col-md-3">5 Star Rating:</div>
+              <div class="row">
+                <div class="col-md-3">Rating:</div>
                 <div class="col-md-6">
-                  <pm-star [rating]="book.starRating">
-                  </pm-star>
+                    <pm-star [rating]="book.starRating" [itemId]='book.id' (ratingClick)='ratingComponentClick($event)'></pm-star>
                 </div>
-              </div> -->
+              </div>
             </div>
-           
-      
+              &nbsp;
+              &nbsp;
+              &nbsp;
+              &nbsp;
             <div class="col-md-4"
                  *ngIf="book.imgUrl">
               <img class="center-block img-fluid "

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Book, BookResolved } from '../models/books';
+import { User} from '../models/user';
 import { AuthService } from '../services/auth.service';
 import { BooksService } from '../services/books.service';
 import { AlertService } from '../services/alert.service';
@@ -12,6 +13,10 @@ export class BookdetailComponent implements OnInit {
   book: Book;
   pageTitle = 'Book Detail';
   errorMessage: string;
+
+  ratingClicked: number;
+  itemIdRatingClicked: string;
+
   get isAdmin(): boolean {
     if (this.authService.currentUser.isAdmin)
       return true;
@@ -64,13 +69,29 @@ export class BookdetailComponent implements OnInit {
     this.bookService.returnBook(this.authService.currentUser, this.book);
   }
   RenewBook(): void {
-    this.alertService.success(this.book.bookTitle + " renewed successfully!!");
-    this.bookService.renewBook(this.authService.currentUser, this.book);
+   
+    
+    if (this.bookService.renewBook(this.authService.currentUser, this.book)===true)
+    {
+      this.alertService.success(this.book.bookTitle + " renewed successfully!!");
+    }
+    else{
+      this.alertService.success(this.book.bookTitle + " cannot be renewed again!!");
+    }
+
+  }
+  ratingComponentClick(clickObj: any): void {
+    const item = this.book
+    if (!!item) {
+      item.starRating = clickObj.rating;
+      this.ratingClicked = clickObj.rating;
+      this.itemIdRatingClicked = this.book.bookTitle;
+    }
+
   }
   onSaveComplete(message?: string): void {
     if (message) {
       //add a message
-    }
-    ;
+    };
   }
 }

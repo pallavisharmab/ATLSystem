@@ -149,7 +149,7 @@ export class LocalStorageService {
         
     }
 
-    RenewBook(user:User,book:Book):void{
+    RenewBook(user:User,book:Book):boolean{
         if(!this._HasData)
           {
              this.LoadLocalStorage();
@@ -158,7 +158,7 @@ export class LocalStorageService {
           {
               var users=JSON.parse(localStorage.getItem('users'));
                 //update user
-                this.updateUser(user,book.id,users,"renew");             
+               return this.updateUser(user,book.id,users,"renew");             
                
           }
           
@@ -188,7 +188,7 @@ export class LocalStorageService {
         }
     }
 
-    private updateUser(user:User,bookId:number,users:any,action:string):void
+    private updateUser(user:User,bookId:number,users:any,action:string):boolean
     {
         if(action==="issue")
         {
@@ -199,16 +199,26 @@ export class LocalStorageService {
           };
            
             user.booksIssued.push(this.issueData);
+            return true;
         }
         else if (action==="return")
         {
             var index=user.booksIssued.findIndex(x=>x.bookId==bookId);
             user.booksIssued.splice(index,1);
+            return true;
         }
         else if (action==="renew")
         {
             var index=user.booksIssued.findIndex(x=>x.bookId==bookId);
-            user.booksIssued[index].RenewedDate=new Date().toLocaleDateString();
+            if (user.booksIssued[index].RenewedDate!=null && user.booksIssued[index].RenewedDate.length>0)
+            {
+            return false;
+            }
+            else{
+              user.booksIssued[index].RenewedDate=new Date().toLocaleDateString();
+              return true;
+            }
+           
         }
        
         for (var key in users) {
