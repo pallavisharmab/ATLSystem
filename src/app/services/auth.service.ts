@@ -1,7 +1,6 @@
 
-    
+import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
-
 import { User } from '../models/user';
  
 @Injectable({
@@ -14,7 +13,7 @@ export class AuthService {
   get isLoggedIn(): boolean {
     return !!this.currentUser;
   }
-
+  userType: BehaviorSubject<string> = new BehaviorSubject<string>(this.getUserType());
   constructor() { }
 
   login(userName: string, password: string): void {
@@ -34,7 +33,7 @@ export class AuthService {
     //   this.messageService.addMessage(`User: ${this.currentUser.userName} logged in`);
     // }
     
-    if (userName === 'admin') {
+    if (userName === 'Admin') {
       this.currentUser = {
         id: 1,
         userName: userName,
@@ -42,7 +41,8 @@ export class AuthService {
         isAdmin: true,
         booksIssued:null
       };
-      
+      localStorage.setItem("user", this.currentUser.userName);
+    this.userType.next(this.currentUser.userName);
       return;
     }
     this.currentUser = {
@@ -52,10 +52,18 @@ export class AuthService {
       isAdmin: false,
       booksIssued: [ {'bookId':101,'IssuedDate':'2019/03/30 10:14:23','RenewedDate':null }]
     };
-    
+    localStorage.setItem("user", this.currentUser.userName);
+    this.userType.next(this.currentUser.userName);
+   
   }
 
   logout(): void {
+    
     this.currentUser = null;
+    localStorage.setItem("user", null);
+    this.userType.next(null);
+  }
+  getUserType() {
+    return localStorage.getItem('user');
   }
 }

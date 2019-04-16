@@ -12,8 +12,10 @@ import { AuthService } from './services/auth.service';
 export class AppComponent {
   title = 'ATLSystem-Any Time Library';
   loading= true;
-
+  userType: string = '';
+  
   get isLoggedIn(): boolean {
+    this.authService.userType.subscribe(value => this.userType = value);
     return this.authService.isLoggedIn;
   }
 
@@ -50,6 +52,7 @@ export class AppComponent {
 
 logOut(): void {
   this.authService.logout();
+  this.authService.userType.subscribe(value => this.userType = value);
   this.router.navigateByUrl('/home');
 }
 

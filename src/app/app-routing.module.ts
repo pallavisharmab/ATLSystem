@@ -5,6 +5,7 @@ import { HomeComponent } from '../app/home/home.component';
 // import { BooksComponent } from './books/books.component';
 // import { BookdetailComponent } from './book-detail/book-detail.component';
 import { LoginComponent } from './login/login.component';
+import { IssuedbooksComponent } from './issuedbooks/issuedbooks.component';
 import { AuthGuard } from './login/auth.guard';
 import { SelectiveStrategy } from './selective-strategy.service';
 
@@ -19,6 +20,12 @@ import { SelectiveStrategy } from './selective-strategy.service';
         loadChildren: './book.module#BookModule'
         },
         { path: 'login', component: LoginComponent },
+        { 
+          path: 'issuedbooks', 
+          component: IssuedbooksComponent,
+          canActivate: [AuthGuard],
+          data: { preload: false }
+        },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: '**', component: HomeComponent }
     ], { preloadingStrategy: SelectiveStrategy })   // , { enableTracing: true, preloadingStrategy: SelectiveStrategy }

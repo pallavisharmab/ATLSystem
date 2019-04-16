@@ -21,6 +21,7 @@ export class LocalStorageService {
 
         localStorage.setItem("maxUserId","2");
         localStorage.setItem("maxBookId","112");
+        localStorage.setItem("user",null);
 
         this._HasData=true;
       }

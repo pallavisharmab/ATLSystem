@@ -56,7 +56,7 @@ export class BookEditComponent implements OnInit {
     if (!this.book) {
       this.pageTitle = 'No book found';
     } else {
-      if (this.book.id === 0) {
+      if (this.book.id === 0 && this.authservice.currentUser.isAdmin ) {
         this.pageTitle = 'Add Book';
       } else {
         this.pageTitle = `Edit Book: ${this.book.bookTitle}`;

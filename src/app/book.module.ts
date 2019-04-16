@@ -6,6 +6,7 @@ import { BooksComponent } from './books/books.component';
 import { BookdetailComponent } from './book-detail/book-detail.component';
 import { BookEditComponent } from './book-edit/book-edit.component';
 
+
 import { BookResolver } from './services/book-resolver.service';
 import { BookListResolver} from './bookList-resolver.service';
 import { SharedModule } from './shared/shared.module';
@@ -36,7 +37,6 @@ import { SortByPipe } from '../app/pipes/sort-by';
             // data :{ },
             resolve: { resolvedData: BookResolver }
           }
-    
         ])
     ],
   declarations: [
