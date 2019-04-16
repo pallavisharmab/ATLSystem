@@ -11,6 +11,7 @@ export interface User {
 }
 export interface IssueDetails{
   bookId:number;
+  Title:string;
   IssuedDate:string;
   RenewedDate:string;
 }

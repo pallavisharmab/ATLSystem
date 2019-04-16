@@ -44,6 +44,7 @@ export class BooksService {
       imgUrl : null,
       issued : null,
       isbn : null,
+      likes: 0,
       description :null,
       starRating: 0
     };
@@ -90,6 +91,10 @@ export class BooksService {
   renewBook(user:User,book:Book):boolean{
    return this.localstorageservice.RenewBook(user,book) ;
     
+   }
+
+   getIssuedBooks():User[]{
+    return this.localstorageservice.getIssuedBooks();
    }
 
 }

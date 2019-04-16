@@ -9,7 +9,6 @@ import { User , IssueDetails} from '../models/user';
 export class LocalStorageService { 
     books: Book[];
     issueData:IssueDetails;
-    //book:Book;
     _HasData: boolean=false;
     constructor() { }
      
@@ -27,14 +26,31 @@ export class LocalStorageService {
       }
 
 
-      getAllBooks(): Book[]{
+    getAllBooks(): Book[]{
         if(!this._HasData)
         {
             this.LoadLocalStorage();
            
         }
             return JSON.parse(localStorage.getItem('books'));
+    }
+
+     getIssuedBooks(): User[]{
+          if(!this._HasData)
+        {
+            this.LoadLocalStorage();
+           
         }
+        var id=1;
+        var users=  JSON.parse(localStorage.getItem('users'));
+            for (var key in users) {
+              if (id==users[key].id){
+                users.splice(parseInt(key),1);
+               }
+           }
+           return users;
+    }
+        
 
      getBook(id:number):Book{
         if(!this._HasData)
@@ -50,7 +66,7 @@ export class LocalStorageService {
             }
        } 
     }   
- }
+    }
 
      createBook(book:Book):Book{
         if(!this._HasData)
@@ -163,7 +179,8 @@ export class LocalStorageService {
                
           }
           
-      }
+    }
+
     private checkIfExisting(users:any,id:number):boolean{
         for (var key in users) {
             if (id==users[key].id){
@@ -191,21 +208,26 @@ export class LocalStorageService {
 
     private updateUser(user:User,bookId:number,users:any,action:string):boolean
     {
+      
+      var issuedBook=this.getBook(bookId);
         if(action==="issue")
         {
           this.issueData={
             bookId:bookId,
+            Title:issuedBook.bookTitle,
             IssuedDate:new Date().toLocaleDateString(),
             RenewedDate:null
           };
            
             user.booksIssued.push(this.issueData);
+            this.updatelocalstorage(user,users);
             return true;
         }
         else if (action==="return")
         {
             var index=user.booksIssued.findIndex(x=>x.bookId==bookId);
             user.booksIssued.splice(index,1);
+            this.updatelocalstorage(user,users);
             return true;
         }
         else if (action==="renew")
@@ -217,16 +239,20 @@ export class LocalStorageService {
             }
             else{
               user.booksIssued[index].RenewedDate=new Date().toLocaleDateString();
+              this.updatelocalstorage(user,users);
               return true;
             }
            
         }
-       
+       }
+
+    private updatelocalstorage(user:User,users:any):void
+       {
         for (var key in users) {
-            if (user.id==users[key].id){
-                users[key]=user;
-              localStorage.setItem('users',JSON.stringify(users));
-          }
+          if (user.id==users[key].id){
+              users[key]=user;
+            localStorage.setItem('users',JSON.stringify(users));
+        }
        }
     }
 

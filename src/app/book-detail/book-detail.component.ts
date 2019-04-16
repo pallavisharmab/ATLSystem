@@ -89,6 +89,10 @@ export class BookdetailComponent implements OnInit {
     }
 
   }
+  like():void{
+    this.book.likes=this.book.likes+1;
+    
+  }
   onSaveComplete(message?: string): void {
     if (message) {
       //add a message

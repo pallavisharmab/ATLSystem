@@ -59,21 +59,26 @@
                 </div>
               </div>
             </div>
-              &nbsp;
-              &nbsp;
-              &nbsp;
-              &nbsp;
+              
             <div class="col-md-4"
                  *ngIf="book.imgUrl">
               <img class="center-block img-fluid "
                    [style.height.px]="350"
                    [style.margin.px]="2"
                    [src]="book.imgUrl"
-                   [title]="book.productName">
+                   [title]="book.productName"/>
+                   &nbsp;
+                   &nbsp;
+                   <div >
+                      <button type="button"   class="remove_button_css" (click)="like()">like</button>
+                      ({{book.likes}})
+                    </div>
             </div>
-         </div>
-
+            
         
+        </div>
+        &nbsp;
+        &nbsp;
           <div class="col-md-3" *ngIf="isAdmin">
             <a [routerLink] ="['/books', book.id, 'edit']" class="btn btn-primary mr-3" style="width:80px">
             Edit

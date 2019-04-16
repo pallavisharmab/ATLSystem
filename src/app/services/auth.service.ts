@@ -50,7 +50,7 @@ export class AuthService {
       userName: userName,
       password:password,
       isAdmin: false,
-      booksIssued: [ {'bookId':101,'IssuedDate':'2019/03/30 10:14:23','RenewedDate':null }]
+      booksIssued: [ {'bookId':101,'Title':'Angular JS','IssuedDate':'2019/03/30 10:14:23','RenewedDate':null }]
     };
     localStorage.setItem("user", this.currentUser.userName);
     this.userType.next(this.currentUser.userName);

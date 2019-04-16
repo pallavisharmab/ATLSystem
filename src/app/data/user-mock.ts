@@ -6,7 +6,7 @@ export const USERS: User[]=
         'userName': 'Admin',
         'password': 'admin',
         'isAdmin': true,
-        'booksIssued':[{'bookId':0,'IssuedDate':null,'RenewedDate':null }]
+        'booksIssued':[{'bookId':0,'Title':null,'IssuedDate':null,'RenewedDate':null }]
        
     },
     {
@@ -15,7 +15,7 @@ export const USERS: User[]=
         'password': 'pallavi',
         'isAdmin': false,
         'booksIssued':[
-        {'bookId':101,'IssuedDate':'3/12/2019','RenewedDate':null }]
+        {'bookId':101,'Title':'Angular JS','IssuedDate':'3/12/2019','RenewedDate':null }]
     },
 
     

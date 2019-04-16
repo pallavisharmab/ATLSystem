@@ -9,6 +9,7 @@ export class Book {
     isbn: string;
     description: string;
     starRating:number;
+    likes:number;
 }
 
 export interface BookResolved {
