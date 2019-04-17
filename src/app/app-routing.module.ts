@@ -20,8 +20,8 @@ import { SelectiveStrategy } from './selective-strategy.service';
         loadChildren: './book.module#BookModule'
         },
         { path: 'login', component: LoginComponent },
-        { 
-          path: 'issuedbooks', 
+        {
+          path: 'issuedbooks',
           component: IssuedbooksComponent,
           canActivate: [AuthGuard],
           data: { preload: false }

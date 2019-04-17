@@ -8,8 +8,8 @@ export class Book {
     issued: boolean;
     isbn: string;
     description: string;
-    starRating:number;
-    likes:number;
+    starRating: number;
+    likes: number;
 }
 
 export interface BookResolved {
@@ -17,7 +17,7 @@ export interface BookResolved {
     error?: any;
   }
 
-  export interface BookListResolved {
+export interface BookListResolved {
     books: Book[];
     error?: any;
   }

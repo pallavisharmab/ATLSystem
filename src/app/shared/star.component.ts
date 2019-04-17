@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'pm-star',
+  selector: 'app-pm-star',
   templateUrl: './star.component.html',
   styleUrls: ['./star.component.css']
 })
@@ -17,7 +17,7 @@ export class StarComponent implements OnInit {
     this.rating = rating;
     this.ratingClick.emit({
       itemId: this.itemId,
-      rating: rating
+      rating
     });
   }
 }

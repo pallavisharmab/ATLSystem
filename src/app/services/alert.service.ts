@@ -18,7 +18,7 @@ export class AlertService {
                     // only keep for a single route change
                     this.keepAfterRouteChange = false;
                 } else {
-                    // clear alert messages 
+                    // clear alert messages
                     this.clear();
                 }
             }
@@ -43,11 +43,11 @@ export class AlertService {
         this.alert(new Alert({ message, type: AlertType.Info }));
     }
 
-    warn(message: string) { 
+    warn(message: string) {
         this.alert(new Alert({ message, type: AlertType.Warning }));
     }
 
-    // main alert method    
+    // main alert method
     alert(alert: Alert) {
         this.keepAfterRouteChange = alert.keepAfterRouteChange;
         this.subject.next(alert);
@@ -57,4 +57,4 @@ export class AlertService {
     clear(alertId?: string) {
         this.subject.next(new Alert({ alertId }));
     }
-}   
+}

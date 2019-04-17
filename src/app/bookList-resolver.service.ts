@@ -11,16 +11,16 @@ import { BooksService } from './services/books.service';
   providedIn: 'root'
 })
 
-export class BookListResolver implements Resolve<BookListResolved>{
+export class BookListResolver implements Resolve<BookListResolved> {
   constructor(private booksService: BooksService) { }
 
- 
+
    resolve(route: ActivatedRouteSnapshot,
-          state: RouterStateSnapshot): Observable<BookListResolved> {
+           state: RouterStateSnapshot): Observable<BookListResolved> {
 
             return this.booksService.getAllBooks()
             .pipe(
-              map(books => ({ books: books }))
+              map(books => ({ books }))
               ,
               catchError(error => {
                 const message = `Retrieval error: ${error}`;

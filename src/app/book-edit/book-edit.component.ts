@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { Book,BookResolved } from '../models/books';
+import { Book, BookResolved } from '../models/books';
 import { BooksService } from '../services/books.service';
 
 import { LocalAuthService } from '../services/localauth.service';
@@ -32,22 +32,20 @@ export class BookEditComponent implements OnInit {
   constructor(private bookService: BooksService,
               private route: ActivatedRoute,
               private router: Router,
-         private localauthservice: LocalAuthService) { }
+              private localauthservice: LocalAuthService) { }
 
   ngOnInit() {
-    if(this.localauthservice.currentUser.isAdmin)
-    {
+    if (this.localauthservice.currentUser.isAdmin) {
       this.route.data.subscribe(data => {
-      const resolvedData: BookResolved = data['resolvedData'];
+      const resolvedData: BookResolved = data.resolvedData;
       this.errorMessage = resolvedData.error;
       this.onBookRetrieved(resolvedData.book);
     });
-  }
-  else{
-    
+  } else {
+
   this.router.navigateByUrl('/home');
 }
-  
+
   }
 
   onBookRetrieved(book: Book): void {
@@ -70,20 +68,20 @@ export class BookEditComponent implements OnInit {
         this.bookService.createBook(this.book)
           .subscribe(
             () => this.onSaveComplete(`The new ${this.book.bookTitle} was saved`),
-            (error: any) => this.errorMessage = <any>error
+            (error: any) => this.errorMessage = error as any
           );
       } else {
         this.bookService.updateBook(this.book)
           .subscribe(
             () => this.onSaveComplete(`The updated ${this.book.bookTitle} was saved`),
-            (error: any) => this.errorMessage = <any>error
+            (error: any) => this.errorMessage = error as any
           );
       }
     } else {
       this.errorMessage = 'Please correct the validation errors.';
     }
   }
-  
+
   deleteBook(): void {
     if (this.book.id === 0) {
       // Don't delete, it was never saved.
@@ -93,7 +91,7 @@ export class BookEditComponent implements OnInit {
         this.bookService.deleteBook(this.book.id)
           .subscribe(
             () => this.onSaveComplete(`${this.book.bookTitle} was deleted`),
-            (error: any) => this.errorMessage = <any>error
+            (error: any) => this.errorMessage = error as any
           );
       }
     }
@@ -101,7 +99,7 @@ export class BookEditComponent implements OnInit {
 
   onSaveComplete(message?: string): void {
     if (message) {
-     //add message
+     // add message
     }
     this.reset();
 
@@ -135,20 +133,20 @@ export class BookEditComponent implements OnInit {
     if (this.book.bookTitle &&
       this.book.bookTitle.length >= 3 &&
       this.book.bookTitle) {
-      this.dataIsValid['info'] = true;
+      this.dataIsValid.info = true;
     } else {
-      this.dataIsValid['info'] = false;
+      this.dataIsValid.info = false;
     }
 
     // 'tags' tab
     if (this.book.genre &&
       this.book.genre.length >= 3) {
-      this.dataIsValid['tags'] = true;
+      this.dataIsValid.tags = true;
     } else {
-      this.dataIsValid['tags'] = false;
+      this.dataIsValid.tags = false;
     }
   }
 
- 
+
 
 }

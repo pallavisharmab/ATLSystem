@@ -7,7 +7,7 @@ import { BooksService } from '../services/books.service';
 
 
 @Component({
-  
+
   templateUrl: './books.component.html',
   styleUrls: ['./books.component.css']
 })
@@ -15,26 +15,26 @@ export class BooksComponent implements OnInit {
   pageTitle = 'Book List';
   errorMessage: string;
   books: Book[];
- //books=[];
+ // books=[];
 
- 
-  constructor(private bookService: BooksService,private route: ActivatedRoute) { }
+
+  constructor(private bookService: BooksService, private route: ActivatedRoute) { }
 
   ngOnInit() {
 
-    this.getBooks(); 
-    
-  }
-  
+    this.getBooks();
 
-  getBooks():void{
-   
+  }
+
+
+  getBooks(): void {
+
       const resolvedListData: BookListResolved =
-      this.route.snapshot.data['resolvedListData'];
+      this.route.snapshot.data.resolvedListData;
       this.errorMessage = resolvedListData.error;
-      this.books=resolvedListData.books;
+      this.books = resolvedListData.books;
      }
- 
-  } 
-  
+
+  }
+
 

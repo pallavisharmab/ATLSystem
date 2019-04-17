@@ -19,16 +19,16 @@ export class BookResolver implements Resolve<BookResolved> {
     const id = route.paramMap.get('id');
     if (isNaN(+id)) {
       const message = `Book id was not a number: ${id}`;
-     
+
       return of({ book: null, error: message });
     }
 
     return this.booksService.getBook(+id)
       .pipe(
-        map(book => ({ book: book })),
+        map(book => ({ book })),
         catchError(error => {
           const message = `Retrieval error: ${error}`;
-         
+
           return of({ book: null, error: message });
         })
       );

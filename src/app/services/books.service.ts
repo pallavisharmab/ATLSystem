@@ -6,38 +6,38 @@ import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BooksComponent } from '../books/books.component';
-//import  { BOOKS } from '../data/books-mock';
+// import  { BOOKS } from '../data/books-mock';
 import { LocalStorageService } from './localstorage.service';
 import { UseExistingWebDriver } from 'protractor/built/driverProviders';
 
- 
+
 @Injectable({providedIn: 'root'})
-export class BooksService { 
-  
+export class BooksService {
+
    private bookUrl = 'api/books';
   localbooks: Book[];
-  //localbook: Book;
+  // localbook: Book;
   // private bookUrl ='../assets/books.json';
- 
- constructor(private http: HttpClient, private localstorageservice:LocalStorageService) { }
- 
-  getAllBooks(): Observable<Book[]>{
+
+ constructor(private http: HttpClient, private localstorageservice: LocalStorageService) { }
+
+  getAllBooks(): Observable<Book[]> {
    return of(this.localstorageservice.getAllBooks());
     }
-         
+
   getBook(id: number): Observable<Book> {
           if (id === 0) {
             return of(this.initializeProduct());
           }
           return of(this.localstorageservice.getBook(id));
       }
-  
+
 
   private initializeProduct(): Book {
     // Return an initialized object
     return {
       id : 0,
-      bookTitle :null,
+      bookTitle : null,
       genre : null,
       author : null,
       cost : 0,
@@ -45,7 +45,7 @@ export class BooksService {
       issued : null,
       isbn : null,
       likes: 0,
-      description :null,
+      description : null,
       starRating: 0
     };
   }
@@ -79,25 +79,25 @@ export class BooksService {
     return of(this.initializeProduct());
 }
 
-  issueBook(user:User,book:Book): void {
-    this.localstorageservice.IssueBook(user,book);
-   
+  issueBook(user: User, book: Book): void {
+    this.localstorageservice.IssueBook(user, book);
+
   }
 
-  returnBook(user:User,book:Book):void{
-   this.localstorageservice.ReturnBook(user,book) ;
-   
+  returnBook(user: User, book: Book): void {
+   this.localstorageservice.ReturnBook(user, book) ;
+
   }
-  renewBook(user:User,book:Book):boolean{
-   return this.localstorageservice.RenewBook(user,book) ;
-    
+  renewBook(user: User, book: Book): boolean {
+   return this.localstorageservice.RenewBook(user, book) ;
+
    }
 
-   getIssuedBooks():User[]{
+   getIssuedBooks(): User[] {
     return this.localstorageservice.getIssuedBooks();
    }
 
-   getNextMaxUserId():number{
+   getNextMaxUserId(): number {
      return this.localstorageservice.getNextMaxUserId();
    }
 

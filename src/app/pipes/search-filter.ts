@@ -7,13 +7,12 @@ import { Book } from '../models/books';
 
 export class SearchPipe implements PipeTransform {
     transform(books: Book[], args: any): Book[] {
-        if (args != undefined) {
-            let resultantBooks = books.filter(book => book.bookTitle.toUpperCase().indexOf(args.toUpperCase()) !== -1);
+        if (args !== undefined) {
+            const resultantBooks = books.filter(book => book.bookTitle.toUpperCase().indexOf(args.toUpperCase()) !== -1);
             return resultantBooks;
 
-        }
-        else {
+        } else {
             return books;
         }
     }
-} 
+}

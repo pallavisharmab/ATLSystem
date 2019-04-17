@@ -29,7 +29,7 @@ import { SortByPipe } from '../app/pipes/sort-by';
             path: ':id',
             component: BookdetailComponent,
             resolve: { resolvedData: BookResolver }
-           
+
           },
           {
             path: ':id/edit',

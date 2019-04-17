@@ -18,34 +18,36 @@ export class BookdetailComponent implements OnInit {
   itemIdRatingClicked: string;
 
   get isAdmin(): boolean {
-    if (this.localauthService.currentUser.isAdmin)
+    if (this.localauthService.currentUser.isAdmin) {
       return true;
+    }
   }
   get IsissuedToCurrentUser(): boolean {
     if (!this.isAdmin) {
-      if (this.localauthService.currentUser.booksIssued!=null && this.localauthService.currentUser.booksIssued.length > 0) {
-        if (this.localauthService.currentUser.booksIssued.find(x => x.bookId == this.book.id))
+      if (this.localauthService.currentUser.booksIssued != null && this.localauthService.currentUser.booksIssued.length > 0) {
+        if (this.localauthService.currentUser.booksIssued.find(x => x.bookId === this.book.id)) {
           return true;
+        }
       }
     }
   }
   get canIssueBooks(): boolean {
     if (!this.isAdmin) {
-      if (this.localauthService.currentUser.booksIssued===null ||this.localauthService.currentUser.booksIssued.length < 2  ){
-       
+      if (this.localauthService.currentUser.booksIssued === null || this.localauthService.currentUser.booksIssued.length < 2  ) {
+
         return true;
-      
+
     }
     }
   }
-  constructor(private bookService: BooksService, 
-    private route: ActivatedRoute, 
-    private alertService: AlertService, private localauthService: LocalAuthService) { }
+  constructor(private bookService: BooksService,
+              private route: ActivatedRoute,
+              private alertService: AlertService, private localauthService: LocalAuthService) { }
   ngOnInit(): void {
     this.getBook();
   }
   getBook(): void {
-    const resolvedData: BookResolved = this.route.snapshot.data['resolvedData'];
+    const resolvedData: BookResolved = this.route.snapshot.data.resolvedData;
     this.errorMessage = resolvedData.error;
     this.onBookRetrieved(resolvedData.book);
   }
@@ -53,39 +55,35 @@ export class BookdetailComponent implements OnInit {
     this.book = book;
     if (this.book) {
       this.pageTitle = `Book Detail: ${this.book.bookTitle}`;
-    }
-    else {
+    } else {
       this.pageTitle = 'No Book found';
-      this.errorMessage = "No Data";
+      this.errorMessage = 'No Data';
     }
   }
   IssueBook(): void {
     if (!this.canIssueBooks) {
-      this.alertService.error("You have already rented 2 books!!");
-    }
-    else {
-      this.alertService.success(this.book.bookTitle + " Issued successfully!!");
+      this.alertService.error('You have already rented 2 books!!');
+    } else {
+      this.alertService.success(this.book.bookTitle + ' Issued successfully!!');
       this.bookService.issueBook(this.localauthService.currentUser, this.book);
     }
   }
   ReturnBook(): void {
-    this.alertService.success(this.book.bookTitle + " returned successfully!!");
+    this.alertService.success(this.book.bookTitle + ' returned successfully!!');
     this.bookService.returnBook(this.localauthService.currentUser, this.book);
   }
   RenewBook(): void {
-   
-    
-    if (this.bookService.renewBook(this.localauthService.currentUser, this.book)===true)
-    {
-      this.alertService.success(this.book.bookTitle + " renewed successfully!!");
-    }
-    else{
-      this.alertService.success(this.book.bookTitle + " cannot be renewed again!!");
+
+
+    if (this.bookService.renewBook(this.localauthService.currentUser, this.book) === true) {
+      this.alertService.success(this.book.bookTitle + ' renewed successfully!!');
+    } else {
+      this.alertService.success(this.book.bookTitle + ' cannot be renewed again!!');
     }
 
   }
   ratingComponentClick(clickObj: any): void {
-    const item = this.book
+    const item = this.book;
     if (!!item) {
       item.starRating = clickObj.rating;
       this.ratingClicked = clickObj.rating;
@@ -93,13 +91,13 @@ export class BookdetailComponent implements OnInit {
     }
 
   }
-  like():void{
-    this.book.likes=this.book.likes+1;
-    
+  like(): void {
+    this.book.likes = this.book.likes + 1;
+
   }
   onSaveComplete(message?: string): void {
     if (message) {
-      //add a message
-    };
+      // add a message
+    }
   }
 }

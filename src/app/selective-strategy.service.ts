@@ -8,10 +8,12 @@ import { Observable, of } from 'rxjs';
 })
 export class SelectiveStrategy implements PreloadingStrategy {
 
-  preload(route: Route, load: Function): Observable<any> {
-    if (route.data && route.data['preload']) {
-      return load();
-    }
-    return of(null);
-  }
+  preload(route: Route, load: any): Observable<any> {
+
+    return route.data && route.data.preload ? load() : of(null);
+  //   if (route.data && route.data.preload) {
+  //     return load();
+  //   }
+  //   return of(null);
+   }
 }

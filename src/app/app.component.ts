@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router ,Event ,NavigationStart,NavigationEnd,NavigationError, NavigationCancel} from '@angular/router';
+import { Router , Event , NavigationStart, NavigationEnd, NavigationError, NavigationCancel} from '@angular/router';
 import { slideInAnimation } from './app.animation';
 import { LocalAuthService } from './services/localauth.service';
 
@@ -11,15 +11,15 @@ import { LocalAuthService } from './services/localauth.service';
 })
 export class AppComponent {
   title = 'ATLSystem-Any Time Library';
-  loading= true;
-  userType: string = '';
-  
+  loading = true;
+  userType = '';
+
   get isLoggedIn(): boolean {
     this.localauthService.userType.subscribe(value => this.userType = value);
     return this.localauthService.isLoggedIn;
   }
 
-  get isAdmin(): boolean{
+  get isAdmin(): boolean {
    return this.localauthService.currentUser.isAdmin;
   }
   get userName(): string {
@@ -28,7 +28,7 @@ export class AppComponent {
     }
     return '';
   }
-  get userpic():string{
+  get userpic(): string {
     if (this.localauthService.currentUser) {
       return this.localauthService.currentUser.image;
     }
@@ -37,7 +37,7 @@ export class AppComponent {
 
  constructor(private localauthService: LocalAuthService,
              private router: Router,
-             ) { 
+             ) {
   router.events.subscribe((routerEvent: Event) => {
     this.checkRouterEvent(routerEvent);
   });
