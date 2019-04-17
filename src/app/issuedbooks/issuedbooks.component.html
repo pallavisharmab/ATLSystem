@@ -11,11 +11,11 @@
              <td>{{user.userName}}</td>
              <td>
                <ul *ngFor="let data of user.booksIssued ;let i = index">
-                <h3> Book {{i+1}}</h3>
-                 <li >ID: {{data.bookId}}</li>
-                 <li >Title: {{data.Title}}</li>
-                 <li >Issued Date: {{data.IssuedDate}}</li>
-                 <li *ngIf="data.RenewedDate!=null">Renewed Date: {{data.RenewedDate}}</li>
+                <b> Book {{i+1}}</b>
+                 <li><b>ID:</b> {{data.bookId}}</li>
+                 <li ><b>Title:</b> {{data.Title}}</li>
+                 <li ><b>Issued Date: </b>{{data.IssuedDate}}</li>
+                 <li *ngIf="data.RenewedDate!=null"><b>Renewed Date:</b> {{data.RenewedDate}}</li>
                </ul>
              </td>
 

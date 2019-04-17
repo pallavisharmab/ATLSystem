@@ -1,9 +1,25 @@
+<div class="container">
+   
+      
+        <div class="card card-signin my-2">
+
 <div class="card">
-    <div class="card-header">
-      {{pageTitle}}
-    </div>
-  
-    <div class="card-body">
+    <!-- <div class="card-header">
+        <h4 class="card-title mb-4 mt-1">{{pageTitle}}</h4> 
+    </div> -->
+    <div class="card-body" >
+        <h4 class="card-title mb-4 mt-1">{{pageTitle}}</h4> 
+    <div class="col-md-5 offset-md-3">
+        <button (click)="socialSignIn('facebook')" class="btn btn-primary btn-block">
+          <i class="fa fa-facebook"></i> 
+          Sign in with <b>Facebook</b>
+        </button>
+        <button (click)="socialSignIn('google')" class="btn btn-danger btn-block">
+            <i class="fa fa-google"></i> 
+            Sign in with <b>Google</b>
+          </button>
+        </div>
+      <hr>
       <form novalidate
             (ngSubmit)="login(loginForm)"
             #loginForm="ngForm"
@@ -72,9 +88,21 @@
          
         </fieldset>
       </form>
+   
+    
     </div>
   
     <div class="alert alert-danger"
          *ngIf="errorMessage">{{errorMessage}}
     </div>
+   
   </div>
+</div>
+   
+</div>
+
+   
+
+
+
+ 

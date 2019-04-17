@@ -7,8 +7,7 @@ import { User , IssueDetails} from '../models/user';
 
 @Injectable({providedIn: 'root'})
 export class LocalStorageService { 
-    books: Book[];
-    issueData:IssueDetails;
+
     _HasData: boolean=false;
     constructor() { }
      
@@ -25,7 +24,14 @@ export class LocalStorageService {
         this._HasData=true;
       }
 
-
+getNextMaxUserId():number{
+  if(!this._HasData)
+  {
+      this.LoadLocalStorage();
+     
+  }
+      return parseInt(localStorage.getItem('maxUserId'))+1;
+}
     getAllBooks(): Book[]{
         if(!this._HasData)
         {
@@ -112,8 +118,8 @@ export class LocalStorageService {
             var books=JSON.parse(localStorage.getItem('books'));
             for (var key in books) {
                        if (id==books[key].id){
-                        this.books.splice(parseInt(key),1);
-                        localStorage.setItem('books',JSON.stringify(this.books));
+                        books.splice(parseInt(key),1);
+                        localStorage.setItem('books',JSON.stringify(books));
                        }
                     }
         }
@@ -150,15 +156,14 @@ export class LocalStorageService {
      else
         {
             var users=JSON.parse(localStorage.getItem('users'));
-            if (this.checkIfExisting(users,user.id))
+            if (!this.checkIfExisting(users,user.id))
             {
-              //update user
-              this.updateUser(user,book.id,users,"issue");             
+               //create user
+              this.createUser(user);
+                     
             }
-            else{
-                //create user
-                this.createUser(user);
-            }
+            //update user
+            this.updateUser(user,book.id,users,"issue"); 
              //update book
              book.issued=true;
              this.updateBook(book);
@@ -197,7 +202,7 @@ export class LocalStorageService {
      else
         {
             var users=JSON.parse(localStorage.getItem('users'));
-            user.id=parseInt(localStorage.getItem('maxUserId'))+1;
+            //user.id=parseInt(localStorage.getItem('maxUserId'))+1;
             //user.imgUrl='/assets/noImage.JPG';
             users[users.length]=user;
             localStorage.setItem('users',JSON.stringify(users));
@@ -208,26 +213,26 @@ export class LocalStorageService {
 
     private updateUser(user:User,bookId:number,users:any,action:string):boolean
     {
-      
+      var issueData:IssueDetails;
       var issuedBook=this.getBook(bookId);
         if(action==="issue")
         {
-          this.issueData={
+          issueData={
             bookId:bookId,
             Title:issuedBook.bookTitle,
             IssuedDate:new Date().toLocaleDateString(),
             RenewedDate:null
           };
            
-            user.booksIssued.push(this.issueData);
-            this.updatelocalstorage(user,users);
+            user.booksIssued.push(issueData);
+            this.updatelocalstorage(user);
             return true;
         }
         else if (action==="return")
         {
             var index=user.booksIssued.findIndex(x=>x.bookId==bookId);
             user.booksIssued.splice(index,1);
-            this.updatelocalstorage(user,users);
+            this.updatelocalstorage(user);
             return true;
         }
         else if (action==="renew")
@@ -239,15 +244,16 @@ export class LocalStorageService {
             }
             else{
               user.booksIssued[index].RenewedDate=new Date().toLocaleDateString();
-              this.updatelocalstorage(user,users);
+              this.updatelocalstorage(user);
               return true;
             }
            
         }
        }
 
-    private updatelocalstorage(user:User,users:any):void
+    private updatelocalstorage(user:User):void
        {
+        var users=JSON.parse(localStorage.getItem('users'));
         for (var key in users) {
           if (user.id==users[key].id){
               users[key]=user;

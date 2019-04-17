@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router ,Event ,NavigationStart,NavigationEnd,NavigationError, NavigationCancel} from '@angular/router';
 import { slideInAnimation } from './app.animation';
-import { AuthService } from './services/auth.service';
+import { LocalAuthService } from './services/localauth.service';
 
 @Component({
   selector: 'app-root',
@@ -15,21 +15,27 @@ export class AppComponent {
   userType: string = '';
   
   get isLoggedIn(): boolean {
-    this.authService.userType.subscribe(value => this.userType = value);
-    return this.authService.isLoggedIn;
+    this.localauthService.userType.subscribe(value => this.userType = value);
+    return this.localauthService.isLoggedIn;
   }
 
   get isAdmin(): boolean{
-   return this.authService.currentUser.isAdmin;
+   return this.localauthService.currentUser.isAdmin;
   }
   get userName(): string {
-    if (this.authService.currentUser) {
-      return this.authService.currentUser.userName;
+    if (this.localauthService.currentUser) {
+      return this.localauthService.currentUser.userName;
+    }
+    return '';
+  }
+  get userpic():string{
+    if (this.localauthService.currentUser) {
+      return this.localauthService.currentUser.image;
     }
     return '';
   }
 
- constructor(private authService: AuthService,
+ constructor(private localauthService: LocalAuthService,
              private router: Router,
              ) { 
   router.events.subscribe((routerEvent: Event) => {
@@ -51,8 +57,8 @@ export class AppComponent {
 
 
 logOut(): void {
-  this.authService.logout();
-  this.authService.userType.subscribe(value => this.userType = value);
+  this.localauthService.logout();
+  this.localauthService.userType.subscribe(value => this.userType = value);
   this.router.navigateByUrl('/home');
 }
 

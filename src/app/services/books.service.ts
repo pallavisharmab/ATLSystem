@@ -97,5 +97,9 @@ export class BooksService {
     return this.localstorageservice.getIssuedBooks();
    }
 
+   getNextMaxUserId():number{
+     return this.localstorageservice.getNextMaxUserId();
+   }
+
 }
 

@@ -3,14 +3,14 @@ import { CanActivate, CanLoad, ActivatedRouteSnapshot, RouterStateSnapshot, Rout
 
 import { Observable } from 'rxjs';
 
-import { AuthService } from '../services/auth.service';
+import { LocalAuthService } from '../services/localauth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate, CanLoad {
 
-  constructor(private authService: AuthService,
+  constructor(private localauthService: LocalAuthService,
               private router: Router) { }
 
   canActivate(
@@ -24,10 +24,10 @@ export class AuthGuard implements CanActivate, CanLoad {
   }
 
   checkLoggedIn(url: string): boolean {
-    if (this.authService.isLoggedIn) {
+    if (this.localauthService.isLoggedIn) {
       return true;
     }
-    this.authService.redirectUrl = url;
+    this.localauthService.redirectUrl = url;
     this.router.navigate(['/login']);
     return false;
   }

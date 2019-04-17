@@ -4,7 +4,7 @@ import { NgForm } from '@angular/forms';
 import { Book,BookResolved } from '../models/books';
 import { BooksService } from '../services/books.service';
 
-import { AuthService } from '../services/auth.service';
+import { LocalAuthService } from '../services/localauth.service';
 
 @Component({
   selector: 'app-book-edit',
@@ -32,10 +32,10 @@ export class BookEditComponent implements OnInit {
   constructor(private bookService: BooksService,
               private route: ActivatedRoute,
               private router: Router,
-         private authservice: AuthService) { }
+         private localauthservice: LocalAuthService) { }
 
   ngOnInit() {
-    if(this.authservice.currentUser.isAdmin)
+    if(this.localauthservice.currentUser.isAdmin)
     {
       this.route.data.subscribe(data => {
       const resolvedData: BookResolved = data['resolvedData'];
@@ -56,7 +56,7 @@ export class BookEditComponent implements OnInit {
     if (!this.book) {
       this.pageTitle = 'No book found';
     } else {
-      if (this.book.id === 0 && this.authservice.currentUser.isAdmin ) {
+      if (this.book.id === 0 && this.localauthservice.currentUser.isAdmin ) {
         this.pageTitle = 'Add Book';
       } else {
         this.pageTitle = `Edit Book: ${this.book.bookTitle}`;

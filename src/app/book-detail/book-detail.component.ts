@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Book, BookResolved } from '../models/books';
 import { User} from '../models/user';
-import { AuthService } from '../services/auth.service';
+import { LocalAuthService } from '../services/localauth.service';
 import { BooksService } from '../services/books.service';
 import { AlertService } from '../services/alert.service';
 @Component({
@@ -18,25 +18,29 @@ export class BookdetailComponent implements OnInit {
   itemIdRatingClicked: string;
 
   get isAdmin(): boolean {
-    if (this.authService.currentUser.isAdmin)
+    if (this.localauthService.currentUser.isAdmin)
       return true;
   }
   get IsissuedToCurrentUser(): boolean {
     if (!this.isAdmin) {
-      if (this.authService.currentUser.booksIssued.length > 0) {
-        if (this.authService.currentUser.booksIssued.find(x => x.bookId == this.book.id))
+      if (this.localauthService.currentUser.booksIssued!=null && this.localauthService.currentUser.booksIssued.length > 0) {
+        if (this.localauthService.currentUser.booksIssued.find(x => x.bookId == this.book.id))
           return true;
       }
     }
   }
   get canIssueBooks(): boolean {
     if (!this.isAdmin) {
-      if (this.authService.currentUser.booksIssued.length < 2) {
+      if (this.localauthService.currentUser.booksIssued===null ||this.localauthService.currentUser.booksIssued.length < 2  ){
+       
         return true;
-      }
+      
+    }
     }
   }
-  constructor(private bookService: BooksService, private route: ActivatedRoute, private alertService: AlertService, private authService: AuthService) { }
+  constructor(private bookService: BooksService, 
+    private route: ActivatedRoute, 
+    private alertService: AlertService, private localauthService: LocalAuthService) { }
   ngOnInit(): void {
     this.getBook();
   }
@@ -61,17 +65,17 @@ export class BookdetailComponent implements OnInit {
     }
     else {
       this.alertService.success(this.book.bookTitle + " Issued successfully!!");
-      this.bookService.issueBook(this.authService.currentUser, this.book);
+      this.bookService.issueBook(this.localauthService.currentUser, this.book);
     }
   }
   ReturnBook(): void {
     this.alertService.success(this.book.bookTitle + " returned successfully!!");
-    this.bookService.returnBook(this.authService.currentUser, this.book);
+    this.bookService.returnBook(this.localauthService.currentUser, this.book);
   }
   RenewBook(): void {
    
     
-    if (this.bookService.renewBook(this.authService.currentUser, this.book)===true)
+    if (this.bookService.renewBook(this.localauthService.currentUser, this.book)===true)
     {
       this.alertService.success(this.book.bookTitle + " renewed successfully!!");
     }
